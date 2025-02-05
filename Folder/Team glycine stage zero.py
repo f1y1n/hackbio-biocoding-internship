@@ -29,12 +29,12 @@ Team_glycine = [
     "Prog_Language": "Python"
 },
 {
-“Name”: “Osiyemi Emmanuel”
-“Slack_name”: “Emmanuel”
-“Email”: “eseyi79@gmail.com"
-“Hobby”: “mentoring”
-“Discipline”: “Microbiology”
-“Prog_language”: “python”
+    "Name": "Osiyemi Emmanuel"
+    "Slack_name": "Emmanuel"
+    "Email": "eseyi79@gmail.com"
+    "Hobby": "mentoring"
+    "Discipline": "Microbiology"
+    "Prog_language": "python"
 }
 ]
 print(f"Name: {Team_glycine[0]['Name']}")
