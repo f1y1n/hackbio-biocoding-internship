@@ -28,6 +28,14 @@ Team_glycine = [
     "Discipline": "Biochemistry",
     "Prog_Language": "Python"
 },
+{
+“Name”: “Osiyemi Emmanuel”
+“Slack_name”: “Emmanuel”
+“Email”: “eseyi79@gmail.com"
+“Hobby”: “mentoring”
+“Discipline”: “Microbiology”
+“Prog_language”: “python”
+}
 ]
 print(f"Name: {Team_glycine[0]['Name']}")
 print(f"Slack_name: {Team_glycine[0]['Slack_name']}")
@@ -52,3 +60,19 @@ print(f"Hobby: {Team_glycine[2]['Hobby']}")
 print(f"Country: {Team_glycine[2]['Country']}")
 print(f"Discipline: {Team_glycine[2]['Discipline']}")
 print(f"Prog_language: {Team_glycine[2]['Prog_language']}")
+print("")
+print(f"Name: {Team_glycine[3]['Name']}")
+print(f"Slack_name: {Team_glycine[3]['Slack_name']}")
+print(f"Email: {Team_glycine[3]['Email']}")
+print(f"Hobby: {Team_glycine[3]['Hobby']}")
+print(f"Country: {Team_glycine[3]['Country']}")
+print(f"Discipline: {Team_glycine[3]['Discipline']}")
+print(f"Prog_language: {Team_glycine[3]['Prog_language']}")
+print("")
+print(f"Name: {Team_glycine[4]['Name']}")
+print(f"Slack_name: {Team_glycine[4]['Slack_name']}")
+print(f"Email: {Team_glycine[4]['Email']}")
+print(f"Hobby: {Team_glycine[4]['Hobby']}")
+print(f"Country: {Team_glycine[4]['Country']}")
+print(f"Discipline: {Team_glycine[4]['Discipline']}")
+print(f"Prog_language: {Team_glycine[4]['Prog_language']}")
