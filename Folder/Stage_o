@@ -1,0 +1,19 @@
+# MY BIODATA/ ASSIGNMENT
+Ronke_biodata = {
+    "Name": "Adesoye Ronke",
+    "Slack_name": "Ronke",
+    "Email": "fiyinfoluwaaderonke99@gmail.com",
+    "Hobby": "Football",
+    "Country": "Nigeria",
+    "Discipline": "Microbiology",
+    "Prog_language": "python"
+}
+print(Ronke_biodata)
+# f is used to organize it in a readable output
+print(f"Name: {Ronke_biodata['Name']}")
+print(f"Slack_name: {Ronke_biodata['Slack_name']}")
+print(f"Email: {Ronke_biodata['Email']}")
+print(f"Hobby: {Ronke_biodata['Hobby']}")
+print(f"Country: {Ronke_biodata['Country']}")
+print(f"Discipline: {Ronke_biodata['Discipline']}")
+print(f"Prog_language: {Ronke_biodata['Prog_language']}")
