@@ -1,0 +1,50 @@
+# TRANSLATING DNA TO PROTEIN USING PYTHON
+
+# Define a function to translate DNA to protein
+def dna_to_protein(dna_sequence): 
+    # Convert DNA to mRNA (Replace T with U)
+    mrna_sequence = dna_sequence.replace("T", "U")
+
+    # Create a dictionary for RNA codon to amino acid translation
+    codon_table = {
+        'AUG': 'M',  # Start codon (Methionine)
+        'UUU': 'F', 'UUC': 'F',  # Phenylalanine
+        'UUA': 'L', 'UUG': 'L', 'CUU': 'L', 'CUC': 'L', 'CUA': 'L', 'CUG': 'L',  # Leucine
+        'AUU': 'I', 'AUC': 'I', 'AUA': 'I',  # Isoleucine
+        'GUU': 'V', 'GUC': 'V', 'GUA': 'V', 'GUG': 'V',  # Valine
+        'UCU': 'S', 'UCC': 'S', 'UCA': 'S', 'UCG': 'S', 'AGU': 'S', 'AGC': 'S',  # Serine
+        'CCU': 'P', 'CCC': 'P', 'CCA': 'P', 'CCG': 'P',  # Proline
+        'ACU': 'T', 'ACC': 'T', 'ACA': 'T', 'ACG': 'T',  # Threonine
+        'GCU': 'A', 'GCC': 'A', 'GCA': 'A', 'GCG': 'A',  # Alanine
+        'UAU': 'Y', 'UAC': 'Y',  # Tyrosine
+        'CAU': 'H', 'CAC': 'H',  # Histidine
+        'CAA': 'Q', 'CAG': 'Q',  # Glutamine
+        'AAU': 'N', 'AAC': 'N',  # Asparagine
+        'AAA': 'K', 'AAG': 'K',  # Lysine
+        'GAU': 'D', 'GAC': 'D',  # Aspartic Acid
+        'GAA': 'E', 'GAG': 'E',  # Glutamic Acid
+        'UGU': 'C', 'UGC': 'C',  # Cysteine
+        'UGG': 'W',  # Tryptophan
+        'CGU': 'R', 'CGC': 'R', 'CGA': 'R', 'CGG': 'R', 'AGA': 'R', 'AGG': 'R',  # Arginine
+        'GGU': 'G', 'GGC': 'G', 'GGA': 'G', 'GGG': 'G',  # Glycine
+        'UAA': '*', 'UAG': '*', 'UGA': '*'  # Stop codons
+    }
+
+    # Translate codons into protein
+    protein = ""
+    for i in range(0, len(mrna_sequence) - 2, 3):  # Read in triplets
+        codon = mrna_sequence[i:i+3]  # Gets a codon
+        amino_acid = codon_table.get(codon, "?")  # Translate to amino acid
+        if amino_acid == "*":  # Stop translation at a stop codon
+            break
+        protein += amino_acid  # Add amino acid to the protein sequence
+
+    return protein  # Return the final protein sequence
+
+# Example DNA sequence
+dna_sequence = "ATGGGCACATTGGCTAATGGGTCCGCTGAAATGGGTGCACCGATAG"  # Sample DNA
+protein = dna_to_protein(dna_sequence)  # Translate DNA to protein
+print(f"Protein sequence: {protein}")  # Print the translated protein sequence
+
+OUTPUT
+Protein sequence: MGTLANGSAEMGAPI
