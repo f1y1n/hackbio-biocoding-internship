@@ -1,0 +1,44 @@
+#Write a function that simulates and generates 
+a logistic population growth curve. Your function should include 2 extra parameters 
+that randomize the length of the lag phase and the exponential phase. 
+Most living populations follow a logistic population growth. Therefore, 
+your growth curve can be: Population Size vs Time, Cell density vs Time, OD vs Time, CFU vs Time, etc
+Using your function, generate a dataframe with 100 different growth curves#
+
+
+
+def logistic_growth(time, N0, K, r, lag, exp_phase):
+    """
+    Simulates logistic growth with randomized lag and exponential phases.
+    """
+    # Adjust time based on lag phase
+    adjusted_time = np.maximum(time - lag, 0)
+    
+    # Modify r for variability in exponential phase
+    r_mod = r * np.random.uniform(0.8, 1.2)
+    
+    # Logistic growth equation
+    population = K / (1 + ((K - N0) / N0) * np.exp(-r_mod * adjusted_time))
+    
+    return population
+
+# Simulation parameters
+time = np.linspace(0, 100, 100)  # 100 time points
+num_curves = 100  # Number of growth curves
+
+data = []
+
+for i in range(num_curves):
+    N0 = np.random.uniform(0.01, 0.1)  # Initial population size
+    K = np.random.uniform(0.8, 1.2)  # Carrying capacity
+    r = np.random.uniform(0.1, 0.5)  # Growth rate
+    lag = np.random.uniform(0, 20)  # Lag phase duration
+    exp_phase = np.random.uniform(20, 50)  # Exponential phase duration
+    
+    pop_growth = logistic_growth(time, N0, K, r, lag, exp_phase)
+    
+    df = pd.DataFrame({'Time': time, 'Population': pop_growth, 'Curve_ID': i})
+    data.append(df)
+
+# Combine all data into a single DataFrame
+growth_df = pd.concat(data, ignore_index=True)
