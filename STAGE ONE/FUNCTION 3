@@ -1,0 +1,13 @@
+#Write a function for determining the time to reach 80% of the maximum growth#
+
+def time_to_reach_80_percent(K, N0, r, lag):
+    """
+    Determines the time required to reach 80% of the carrying capacity.
+    """
+    target_population = 0.8 * K
+    time = 0
+    while True:
+        population = logistic_growth(np.array([time]), N0, K, r, lag, 0)[0]
+        if population >= target_population:
+            return time
+        time += 0.1  # Increment time step
