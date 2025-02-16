@@ -1,0 +1,15 @@
+"""Hamming distance counts how many positions are different between two sequences of the same length.
+Write a function for calculating the hamming distance between your Slack username and twitter/X handle (synthesize if you don’t have one)
+"""
+names = ["DERONKE", "R00N1Q1"]
+for name1 in names: # enables me pick just one name which is the slack name 
+    for name2 in names: # this compares my slack name to the x name
+        if name1 != name2: # this is a nested loop that ensures I don’t compare my slackname to itself
+            print(f"Comparing {name1} with {name2}")
+            hamming_distance = sum(1 for i in range(len(name1)) if name1[i] != name2[i])
+            print(f"Hamming Distance between {name1} and {name2}: {hamming_distance}")
+OUTPUT
+Comparing DERONKE with R00N1Q1
+Hamming Distance between DERONKE and R00N1Q1: 7
+Comparing R00N1Q1 with DERONKE
+Hamming Distance between R00N1Q1 and DERONKE: 7
