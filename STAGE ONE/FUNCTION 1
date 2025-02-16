@@ -2,42 +2,33 @@
 
 # Define a function to translate DNA to protein
 def dna_to_protein(dna_sequence): 
-    # Convert DNA to mRNA (Replace T with U)
-    mrna_sequence = dna_sequence.replace("T", "U")
-
-    # Create a dictionary for RNA codon to amino acid translation
+    # Create a dictionary for DNA codon to amino acid translation
     codon_table = {
-        'AUG': 'M',  # Start codon (Methionine)
-        'UUU': 'F', 'UUC': 'F',  # Phenylalanine
-        'UUA': 'L', 'UUG': 'L', 'CUU': 'L', 'CUC': 'L', 'CUA': 'L', 'CUG': 'L',  # Leucine
-        'AUU': 'I', 'AUC': 'I', 'AUA': 'I',  # Isoleucine
-        'GUU': 'V', 'GUC': 'V', 'GUA': 'V', 'GUG': 'V',  # Valine
-        'UCU': 'S', 'UCC': 'S', 'UCA': 'S', 'UCG': 'S', 'AGU': 'S', 'AGC': 'S',  # Serine
-        'CCU': 'P', 'CCC': 'P', 'CCA': 'P', 'CCG': 'P',  # Proline
-        'ACU': 'T', 'ACC': 'T', 'ACA': 'T', 'ACG': 'T',  # Threonine
-        'GCU': 'A', 'GCC': 'A', 'GCA': 'A', 'GCG': 'A',  # Alanine
-        'UAU': 'Y', 'UAC': 'Y',  # Tyrosine
-        'CAU': 'H', 'CAC': 'H',  # Histidine
-        'CAA': 'Q', 'CAG': 'Q',  # Glutamine
-        'AAU': 'N', 'AAC': 'N',  # Asparagine
-        'AAA': 'K', 'AAG': 'K',  # Lysine
-        'GAU': 'D', 'GAC': 'D',  # Aspartic Acid
-        'GAA': 'E', 'GAG': 'E',  # Glutamic Acid
-        'UGU': 'C', 'UGC': 'C',  # Cysteine
-        'UGG': 'W',  # Tryptophan
-        'CGU': 'R', 'CGC': 'R', 'CGA': 'R', 'CGG': 'R', 'AGA': 'R', 'AGG': 'R',  # Arginine
-        'GGU': 'G', 'GGC': 'G', 'GGA': 'G', 'GGG': 'G',  # Glycine
-        'UAA': '*', 'UAG': '*', 'UGA': '*'  # Stop codons
+        'ATA': 'I', 'ATC': 'I', 'ATT': 'I', 'ATG': 'M',
+        'ACA': 'T', 'ACC': 'T', 'ACG': 'T', 'ACT': 'T',
+        'AAC': 'N', 'AAT': 'N', 'AAA': 'K', 'AAG': 'K',
+        'AGC': 'S', 'AGT': 'S', 'AGA': 'R', 'AGG': 'R',
+        'CTA': 'L', 'CTC': 'L', 'CTG': 'L', 'CTT': 'L',
+        'CCA': 'P', 'CCC': 'P', 'CCG': 'P', 'CCT': 'P',
+        'CAC': 'H', 'CAT': 'H', 'CAA': 'Q', 'CAG': 'Q',
+        'CGA': 'R', 'CGC': 'R', 'CGG': 'R', 'CGT': 'R',
+        'GTA': 'V', 'GTC': 'V', 'GTG': 'V', 'GTT': 'V',
+        'GCA': 'A', 'GCC': 'A', 'GCG': 'A', 'GCT': 'A',
+        'GAC': 'D', 'GAT': 'D', 'GAA': 'E', 'GAG': 'E',
+        'GGA': 'G', 'GGC': 'G', 'GGG': 'G', 'GGT': 'G',
+        'TCA': 'S', 'TCC': 'S', 'TCG': 'S', 'TCT': 'S',
+        'TTC': 'F', 'TTT': 'F', 'TTA': 'L', 'TTG': 'L',
+        'TAC': 'Y', 'TAT': 'Y', 'TAA': 'Stop', 'TAG': 'Stop', 'TGA': 'Stop'
     }
 
     # Translate codons into protein
     protein = ""
-    for i in range(0, len(mrna_sequence) - 2, 3):  # Read in triplets
-        codon = mrna_sequence[i:i+3]  # Gets a codon
-        amino_acid = codon_table.get(codon, "?")  # Translate to amino acid
-        if amino_acid == "*":  # Stop translation at a stop codon
+    for i in range(0, len(dna_sequence) - 2, 3):  # Read in triplets
+        codon = dna_sequence[i:i+3]  # Extract codon from DNA sequence
+        amino_acid = codon_table.get(codon, "?")  # Get amino acid (default to "?")
+        if amino_acid == 'Stop':  # Stop translation if stop codon is found
             break
-        protein += amino_acid  # Add amino acid to the protein sequence
+        protein += amino_acid  # Append amino acid to the protein sequence
 
     return protein  # Return the final protein sequence
 
