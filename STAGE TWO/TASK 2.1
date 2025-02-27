@@ -69,12 +69,10 @@ plt.xlabel("Condition (- for Knock-out, + for Knock-in)")
 plt.ylabel("Time to Carrying Capacity (hours)")
 plt.show()
 
-# Statistical Test
+# T Test
 t_stat, p_value = ttest_ind(times_ko, times_ki)
 print(f"T-test statistic: {t_stat:.3f}, P-value: {p_value:.3f}")
 
 # Observations
-# - The growth curves show distinct trends for knock-out and knock-in strains.
-# - Scatter and box plots highlight the variability in time to carrying capacity across strains.
 # - If p-value < 0.05, it indicates a statistically significant difference between knock-out and knock-in strains.
 # - If p-value > 0.05, it suggests no significant difference in their growth dynamics.
