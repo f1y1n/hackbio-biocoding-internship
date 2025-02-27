@@ -1,0 +1,113 @@
+
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import requests
+
+# Load dataset from the URL with space as the separator
+data_source = "https://gist.githubusercontent.com/stephenturner/806e31fce55a8b7175af/raw/1a507c4c3f9f1baaa3a69187223ff3d3050628d4/results.txt"
+df = pd.read_csv(data_source, sep=" ", engine="python")  # Use space separator and "python" engine to handle multiple spaces
+
+# Inspect actual column names 
+print(df.columns)
+
+# Ensure column names are stripped of spaces
+df.columns = df.columns.str.strip()
+
+# Check if 'pvalue' exists, otherwise try 'padj'
+pval_col = 'pvalue' if 'pvalue' in df.columns else 'padj'  # Use adjusted p-value if needed
+
+# Compute -log10(p-value) for visualization
+df["-log10(p-value)"] = -np.log10(df[pval_col])
+
+# Define significance categories (p-value < 0.01)
+df["Significance"] = "Not Significant"
+df.loc[(df["log2FoldChange"] > 1) & (df[pval_col] < 0.01), "Significance"] = "Upregulated"
+df.loc[(df["log2FoldChange"] < -1) & (df[pval_col] < 0.01), "Significance"] = "Downregulated"
+
+# Set color mapping
+color_palette = {
+"Upregulated": "red",
+    "Downregulated": "blue",
+    "Not Significant": "gray"
+}
+
+# Create the scatter plot using Seaborn
+sns.scatterplot(
+    data=df,
+    x="log2FoldChange",
+    y="-log10(p-value)",
+    hue="Significance",
+    palette=color_palette,
+    alpha=0.75
+).set(title="Volcano Plot (p < 0.01)")
+
+
+# Filter the upregulated genes (Log2FC > 1 and p-value < 0.01)
+upregulated_genes = df[(df["log2FoldChange"] > 1) & (df["pvalue"] < 0.01)]
+# Display the upregulated genes
+print(upregulated_genes)
+
+
+# Filter the downregulated genes (Log2FC < -1 and p-value < 0.01)
+downregulated_genes = df[(df["log2FoldChange"] < -1) & (df["pvalue"] < 0.01)]
+# Display the downregulated genes
+print(downregulated_genes)
+
+
+# List of genes to query (upregulated and downregulated genes)
+genes = [
+    "EMILIN2", "POU3F4", "LOC285954", "VEPH1", "DTHD1",
+    "TBX5", "IFITM1", "LAMA2", "CAV2", "TNN"
+]
+
+# Function to get gene description from Ensembl API
+def get_gene_info(gene_name):
+    # Query the Ensembl REST API
+    url = f"https://rest.ensembl.org/lookup/symbol/human/{gene_name}?content-type=application/json"
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        gene_data = response.json()
+        # Extract the gene description (note that not all genes have descriptions)
+        description = gene_data.get("description", "Description not available")
+        return description
+    else:
+        return f"Error: {response.status_code}"
+
+# Retrieve gene information
+gene_info = {gene: get_gene_info(gene) for gene in genes}
+
+# Create a DataFrame for better presentation
+gene_df = pd.DataFrame(list(gene_info.items()), columns=["Gene", "Description"])
+
+# Display the DataFrame
+print(gene_df)
+
+# Dictionary to store gene names and their functions
+genes = {
+    "Upregulated Genes": {
+        "EMILIN2": "Enables extracellular matrix constituent conferring elasticity",
+        "POU3F4": "RNA polymerase II transcription regulatory region sequence-specific DNA binding",
+        "LOC285954": "Acts as a tumor suppressor in various cancers",
+        "VEPH1": "Enables protein binding to interact with TGF-beta receptor type-1 (TGFBR1)",
+        "DTHD1": "Enables protein binding"
+    },
+    "Downregulated Genes": {
+        "TBX5": "RNA polymerase II transcription regulatory region sequence-specific DNA binding",
+        "IFITM1": "Enables protein binding",
+        "LAMA2": "Enables signaling receptor binding",
+        "CAV2": "Enables protein binding",
+        "TNN": "Enables integrin binding"
+    }
+}
+
+# Function to display gene functions
+def display_gene_functions():
+    for category, gene_list in genes.items():
+        print(f"\n{category}:")
+        for gene, function in gene_list.items():
+            print(f"{gene}: {function}")
+
+# Run the function
+display_gene_functions()
